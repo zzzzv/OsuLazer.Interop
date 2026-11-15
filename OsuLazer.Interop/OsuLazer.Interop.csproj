@@ -10,9 +10,9 @@
 
     <AssemblyName>OsuLazer.Interop</AssemblyName>
     <RootNamespace>OsuLazer.Interop</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>zzzzv</Authors>
-    <Description>读取本机 osu!lazer 客户端的 Realm 数据库、文件存储与难度的源码库（source-only）。</Description>
+    <Description>Source-only library for reading the local osu!lazer Realm database and file store, and computing star ratings with lazer's own rulesets.</Description>
 
     <!-- 仓库元数据：仓库名不是 OsuLazer.Interop 时改这两处 -->
     <PackageProjectUrl>https://github.com/zzzzv/OsuLazer.Interop</PackageProjectUrl>
@@ -37,7 +37,9 @@
 
   <ItemGroup>
     <None Include="*.cs" Pack="true" PackagePath="content\OsuLazer.Interop\" PackageCopyToOutput="false" />
-    <None Include="..\build\OsuLazer.Interop.props" Pack="true" PackagePath="buildTransitive\" />
+    <!-- 用 build\ 而不是 buildTransitive\：源码只能编进“直接引用本包”的工程，
+         否则间接引用者（如引用了宿主工程的测试项目）会再编一份同名类型，产生 CS0436。 -->
+    <None Include="..\build\OsuLazer.Interop.props" Pack="true" PackagePath="build\" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
