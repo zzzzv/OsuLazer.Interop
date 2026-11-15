@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="OsuLazer.Interop/OsuLazer.Interop.csproj" />
+  <Project Path="OsuLazer.Interop.Tests/OsuLazer.Interop.Tests.csproj" />
+</Solution>

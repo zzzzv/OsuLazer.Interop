@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <!-- lazer 的程序集引用版本由本机安装决定，冲突警告无意义 -->
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+
+    <AssemblyName>OsuLazer.Interop</AssemblyName>
+    <RootNamespace>OsuLazer.Interop</RootNamespace>
+    <Version>0.1.0</Version>
+    <Authors>zzzzv</Authors>
+    <Description>读取本机 osu!lazer 客户端的 Realm 数据库、文件存储与难度的源码库（source-only）。</Description>
+
+    <!-- 仓库元数据：仓库名不是 OsuLazer.Interop 时改这两处 -->
+    <PackageProjectUrl>https://github.com/zzzzv/OsuLazer.Interop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zzzzv/OsuLazer.Interop</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>osu;lazer;realm;osulazer;source-only</PackageTags>
+  </PropertyGroup>
+
+  <Import Project="..\build\OsuLazer.Interop.props" />
+
+  <!-- source-only 打包：不发 dll，只把 .cs 与 props 塞进包 -->
+  <PropertyGroup>
+    <PackageId>OsuLazer.Interop</PackageId>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <PackageOutputPath>..\artifacts</PackageOutputPath>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="*.cs" Pack="true" PackagePath="content\OsuLazer.Interop\" PackageCopyToOutput="false" />
+    <None Include="..\build\OsuLazer.Interop.props" Pack="true" PackagePath="buildTransitive\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

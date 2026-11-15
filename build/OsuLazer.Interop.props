@@ -1,0 +1,59 @@
+<Project>
+
+  <!--
+    本文件有两个用途，且内容只有这一份（避免两份配置漂移）：
+
+    1. 供库自身的工程导入（直接 <Import>），拿到对 lazer 客户端程序集的编译期引用；
+    2. 作为 source-only 包的一部分被 NuGet 自动导入（buildTransitive/OsuLazer.Interop.props），
+       此时同包内存在 ..\content\OsuLazer.Interop 目录，于是额外把源码文件编进使用方程序集。
+
+    使用方如需指定非默认的 lazer 安装目录，可在自己的工程里覆盖：
+      <OsuLazerCurrentDir>D:\osulazer\current</OsuLazerCurrentDir>
+  -->
+
+  <PropertyGroup>
+    <OsuLazerCurrentDir Condition="'$(OsuLazerCurrentDir)' == '' AND '$(LocalAppData)' != ''">$(LocalAppData)\osulazer\current</OsuLazerCurrentDir>
+    <OsuLazerCurrentDir Condition="'$(OsuLazerCurrentDir)' == ''">$(LOCALAPPDATA)\osulazer\current</OsuLazerCurrentDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Private=false：不复制进输出目录，运行时由 OsuLazer.Interop 的程序集解析器从 lazer 目录加载 -->
+    <Reference Include="osu.Game">
+      <HintPath>$(OsuLazerCurrentDir)\osu.Game.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="osu.Framework">
+      <HintPath>$(OsuLazerCurrentDir)\osu.Framework.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- 库与规则集无关，不在此预置任何 osu.Game.Rulesets.*。
+         运行时各 ruleset 程序集由解析器按需从 lazer 目录加载；若代码里要直接用某个模式的 mod 类型，
+         在该工程里自行加一条 Reference 即可。 -->
+    <Reference Include="Realm">
+      <HintPath>$(OsuLazerCurrentDir)\Realm.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- source-only 包布局：仅当以包形式引入时该目录才存在 -->
+  <ItemGroup Condition="Exists('$(MSBuildThisFileDirectory)..\content\OsuLazer.Interop')">
+    <Compile Include="$(MSBuildThisFileDirectory)..\content\OsuLazer.Interop\*.cs">
+      <Link>OsuLazer.Interop\%(Filename)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Compile>
+  </ItemGroup>
+
+  <!--
+    使用方必须安装 lazer 客户端。缺失时给出明确原因，
+    否则只会得到 "找不到 osu.Game.dll" 这类难以定位的编译错误。
+  -->
+  <Target Name="OsuLazerInterop_CheckLazerInstalled" BeforeTargets="PrepareForBuild">
+    <Error Code="OSULAZER001"
+           Condition="!Exists('$(OsuLazerCurrentDir)\osu.Game.dll')"
+           Text="未找到 osu!lazer：$(OsuLazerCurrentDir)\osu.Game.dll 不存在。请先安装 lazer 客户端，或在工程里用 OsuLazerCurrentDir 属性指定它的 current 目录。" />
+    <Error Code="OSULAZER002"
+           Condition="!Exists('$(OsuLazerCurrentDir)\Realm.dll')"
+           Text="未找到 osu!lazer 的 Realm.dll：$(OsuLazerCurrentDir)\Realm.dll 不存在。请确认 lazer 安装完整。" />
+  </Target>
+
+</Project>
