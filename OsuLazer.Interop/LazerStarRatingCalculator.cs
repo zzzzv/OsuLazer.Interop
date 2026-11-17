@@ -4,6 +4,8 @@ using osu.Game.IO;
 using osu.Game.Online.API;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.Mods;
+// APIMod -> Mod 的转换自 lazer 2026.1117 起由 osu.Game.Scoring.ConfiguredModExtensions.ToMod 提供
+using osu.Game.Scoring;
 
 namespace OsuLazer.Interop;
 

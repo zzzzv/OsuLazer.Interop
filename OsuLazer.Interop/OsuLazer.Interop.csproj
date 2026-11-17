@@ -10,7 +10,7 @@
 
     <AssemblyName>OsuLazer.Interop</AssemblyName>
     <RootNamespace>OsuLazer.Interop</RootNamespace>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>zzzzv</Authors>
     <Description>Source-only library for reading the local osu!lazer Realm database and file store, and computing star ratings with lazer's own rulesets.</Description>
 

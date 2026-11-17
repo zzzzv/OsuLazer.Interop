@@ -23,7 +23,7 @@ dotnet add package OsuLazer.Interop
 或直接写进工程：
 
 ```xml
-<PackageReference Include="OsuLazer.Interop" Version="0.1.1" />
+<PackageReference Include="OsuLazer.Interop" Version="0.1.2" />
 ```
 
 包是 **source-only** 的：不含 dll，源码会编进你自己的程序集。因此不存在二进制版本兼容问题，但要求构建机装好 lazer（见上）。
@@ -31,7 +31,7 @@ dotnet add package OsuLazer.Interop
 手写 `PackageReference` 时建议带上 `PrivateAssets="all"`，避免它继续作为依赖传递给引用本项目的工程。用 `dotnet add package` 安装时 NuGet 会自动加上（包在 nuspec 里标了 `developmentDependency`）：
 
 ```xml
-<PackageReference Include="OsuLazer.Interop" Version="0.1.1" PrivateAssets="all" />
+<PackageReference Include="OsuLazer.Interop" Version="0.1.2" PrivateAssets="all" />
 ```
 
 本地改库调试时可直接引用项目（同机相邻目录）：

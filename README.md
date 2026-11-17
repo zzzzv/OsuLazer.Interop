@@ -23,7 +23,7 @@ dotnet add package OsuLazer.Interop
 Or reference it directly:
 
 ```xml
-<PackageReference Include="OsuLazer.Interop" Version="0.1.1" />
+<PackageReference Include="OsuLazer.Interop" Version="0.1.2" />
 ```
 
 The package is **source-only**: it contains no dll, the sources are compiled into your own assembly. There is no binary compatibility problem as a result, but the build machine still needs lazer installed (see above).
@@ -31,7 +31,7 @@ The package is **source-only**: it contains no dll, the sources are compiled int
 When writing the `PackageReference` by hand, prefer adding `PrivateAssets="all"` so the package is not propagated to projects referencing yours. `dotnet add package` adds it automatically, because the package is marked as a development dependency:
 
 ```xml
-<PackageReference Include="OsuLazer.Interop" Version="0.1.1" PrivateAssets="all" />
+<PackageReference Include="OsuLazer.Interop" Version="0.1.2" PrivateAssets="all" />
 ```
 
 To hack on the library itself, reference the project instead (sibling directory on the same machine):
